@@ -56,7 +56,7 @@ python setup_env.py
 
 ```env
 GEMINI_API_KEY=your_api_key
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.1-flash-lite-preview
 GEMINI_TIMEOUT_MS=600000
 GEMINI_RATE_LIMIT_SLEEP_SEC=5
 ```
