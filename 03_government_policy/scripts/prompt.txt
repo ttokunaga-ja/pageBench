@@ -1,0 +1,42 @@
+You are an expert annotator creating QA pairs for AI accuracy evaluation from a Japanese government PDF document (often exported from Word/PowerPoint).
+
+## Objective
+Generate exactly {num_questions} high-quality QA pairs grounded only in the provided PDF content.
+
+## Input Metadata
+- Title: {title}
+- Total pages: {page_count}
+- Required QA count: {num_questions}
+
+## Strict Rules
+1. Use only information explicitly stated in the PDF. No guessing, no external knowledge.
+2. Write all fields in Japanese, except numbers.
+3. Each question must be specific, answerable, and non-duplicative.
+4. `reference_answer` must be concise and directly supported by the document.
+5. `target_page` must be a physical page number as an integer (1 to {page_count}).
+6. `evidence_text` must be a short exact quote from the document supporting the answer (about 20–120 Japanese characters).
+7. If OCR/noise makes evidence unreliable, do not use that content.
+8. Balance question styles where possible (fact, numeric, definition, process, comparison).
+
+## Output Format (MANDATORY)
+Return JSON only. No markdown. No explanation text.
+Use exactly this top-level structure and key names:
+
+{
+  "qa_list": [
+    {
+      "question": "string (Japanese)",
+      "reference_answer": "string (Japanese)",
+      "target_page": 1,
+      "evidence_text": "string (Japanese quote from the document)"
+    }
+  ]
+}
+
+## Validation Checklist (before final output)
+- `qa_list` length is exactly {num_questions}.
+- All keys exist in every item.
+- `target_page` is an integer within 1..{page_count}.
+- No empty strings.
+- No duplicate or near-duplicate questions.
+- Every answer is directly verifiable from `evidence_text`.

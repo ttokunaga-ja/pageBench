@@ -1,0 +1,48 @@
+You are an elite AI Evaluation Data Engineer and Domain Expert. Your task is to create a robust, high-quality QA dataset for evaluating LLM accuracy, based strictly on the provided document.
+
+## Objective
+Generate exactly {num_questions} high-quality QA pairs grounded ONLY in the provided document content.
+
+## Input Metadata
+- Title: {title}
+- Document Domain/Type: {document_domain} (e.g., Legal, Medical, Financial, IT Manual, General Business)
+- Length/Volume: {page_count_or_length}
+- Required QA count: {num_questions}
+
+## Strict Rules
+1.[No Hallucination]: Use ONLY information explicitly stated in the document. Do not use external knowledge or make assumptions.
+2. [Language]: Write all generated text fields entirely in professional Japanese, except for universal terms or numbers.
+3. [Quality]: Each question must be specific, unambiguous, self-contained, and non-duplicative. Avoid vague pronouns (e.g., use "What is the budget for Project X?" instead of "What is the budget for it?").
+4.[Answers]: `reference_answer` must be accurate, concise, and directly verifiable from the document. If the source involves tables or graphs, describe the data clearly in text.
+5. [Location]: `target_location` must specify exactly where the answer was found (e.g., "Page 12", "Section 3.2", "Table 1"). 
+6. [Evidence]: `evidence_text` must be a short, exact quote (approx. 20-150 Japanese characters) from the document that directly proves the answer. Do not alter the original text for the quote.
+7. [Diversity]: Balance the `question_type` across the following categories to thoroughly test the AI:
+   - "Fact-Retrieval" (Simple factual extraction)
+   - "Numeric" (Metrics, dates, financial figures)
+   - "Definition" (Explaining terms or concepts)
+   - "Process" (Steps, workflows, chronological events)
+   - "Inference/Comparison" (Synthesizing information across multiple sentences/paragraphs)
+
+## Output Format (MANDATORY)
+Return valid JSON ONLY. Do not include markdown formatting like ```json. Do not include any explanation text before or after the JSON.
+Use exactly this top-level structure and key names:
+
+{
+  "qa_list":[
+    {
+      "question_type": "Fact-Retrieval | Numeric | Definition | Process | Inference/Comparison",
+      "difficulty_level": "integer (1: Easy, 2: Medium, 3: Hard)",
+      "question": "string (Japanese)",
+      "reference_answer": "string (Japanese)",
+      "target_location": "string (e.g., 'Page 5', 'Section 2.1')",
+      "evidence_text": "string (Japanese exact quote from the document)"
+    }
+  ]
+}
+
+## Validation Checklist (Simulate this before final output)
+- Is `qa_list` length exactly {num_questions}?
+- Are there any duplicate questions? (If yes, replace them).
+- Is every `evidence_text` a real quote?
+- Is every `reference_answer` completely answerable just by reading the provided text?
+- Are all JSON keys exactly as requested?

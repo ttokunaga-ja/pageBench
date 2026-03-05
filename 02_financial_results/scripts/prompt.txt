@@ -1,0 +1,14 @@
+You are an expert financial analyst and an educator.
+Based on the provided document titled "{title}", generate a high-quality Question & Answer dataset for evaluating a RAG (Retrieval-Augmented Generation) system.
+
+Document Info:
+- Total pages: {page_count}
+- Requested number of QA pairs: {num_questions}
+
+Instructions:
+1. Generate exactly {num_questions} QA pairs based on the facts, figures, and strategies mentioned in the document.
+2. The questions and answers MUST be written in Japanese (日本語).
+3. Ensure the questions are distributed across the entire document, not just from the first few pages.
+4. For each QA pair, provide the exact physical page number (target_page) where the evidence is located.
+5. Extract the exact text or table data (evidence_text) from that page which supports the answer.
+6. Strictly adhere to the requested JSON schema.

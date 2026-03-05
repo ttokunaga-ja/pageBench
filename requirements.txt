@@ -1,0 +1,15 @@
+# Common Python dependencies for PageBench tools
+# This file is used by setup_env.py within common_utils
+
+unstructured[pdf]
+pypdf
+python-docx
+python-pptx
+python-dotenv
+pyyaml
+openai
+google-genai
+pydantic
+pandas
+datasets
+# add additional libraries here as needed
