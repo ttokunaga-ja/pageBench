@@ -1,5 +1,27 @@
 .env
+.env.*
+!.env.example
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python caches and tooling artifacts
 __pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local setup cache
+.setup_state.json
+
+# macOS
 .DS_Store
+
+# Generated PDFs
 **/source_pdfs/
 !**/source_pdfs/.gitkeep
