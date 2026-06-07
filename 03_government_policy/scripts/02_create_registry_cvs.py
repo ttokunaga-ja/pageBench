@@ -25,22 +25,15 @@ def run():
 
     registry_data = []
 
-    # 3. ファイルのリネームと情報取得
+    # 3. ファイルの情報取得
     for i, original_name in enumerate(files, 1):
-        # 新しいファイル名の作成 (例: 02_01_original.pdf)
-        new_name = f"{topic_id}_{i:02d}_{original_name}"
-        
-        old_file_path = pdf_dir / original_name
-        new_file_path = pdf_dir / new_name
-
-        print(f"Renaming: {original_name} -> {new_name}")
-        os.rename(old_file_path, new_file_path)
+        file_path = pdf_dir / original_name
 
         # 4. Unstructuredを使用してページ数をカウント
-        print(f"Counting pages for: {new_name}...")
+        print(f"Counting pages for: {original_name}...")
         try:
             elements = partition(
-                filename=str(new_file_path),
+                filename=str(file_path),
                 languages=["jpn", "eng"],  # 日本語と英語を指定
                 strategy="fast"             # ページ数取得が目的なら "fast" にすると高速化します
             )
@@ -48,13 +41,13 @@ def run():
             pages = [el.metadata.page_number for el in elements if el.metadata.page_number is not None]
             page_count = max(pages) if pages else 1
         except Exception as e:
-            print(f"Error processing {new_name}: {e}")
+            print(f"Error processing {original_name}: {e}")
             page_count = 0
 
         # registryに追加するデータ行を作成
         registry_data.append({
-            "file_name": new_name,
-            "title": original_name, # titleにはリネーム前の名称を入れる
+            "file_name": original_name,
+            "title": original_name,
             "source_url": "null",
             "page_count": page_count
         })
